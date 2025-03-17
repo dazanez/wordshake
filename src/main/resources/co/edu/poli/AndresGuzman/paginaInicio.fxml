@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="502.0" prefWidth="500.0" styleClass="anchor-pane" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.AndresGuzman.controlador.ControladorUser">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="84.0" layoutY="82.0" prefHeight="135.0" prefWidth="338.0" style="-fx-effect: dropshadow(gaussian, white, 4, 0, 2, 1);" text="WordShake" textAlignment="RIGHT" textOverrun="CENTER_WORD_ELLIPSIS">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="DISAPPEAR" />
+         </cursor>
+         <textFill>
+            <LinearGradient cycleMethod="REFLECT" endX="0.4502369668246446" endY="0.6161137440758293">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.5136904716491699" green="0.05000000074505806" blue="1.0" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.006711409395973154">
+                     <color>
+                        <Color red="0.5136904716491699" green="0.05000000074505806" blue="1.0" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.8899999856948853" green="0.07119999825954437" blue="0.6852999925613403" opacity="0.9160305261611938" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <TextField fx:id="user_name" alignment="CENTER" layoutX="148.0" layoutY="204.0" prefHeight="46.0" prefWidth="210.0" promptText="UserName">
+         <effect>
+            <DropShadow height="38.59" radius="18.0625" spread="0.61" width="35.66">
+               <color>
+                  <Color red="0.6333333253860474" blue="1.0" />
+               </color>
+            </DropShadow>
+         </effect>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </TextField>
+      <Button fx:id="iniciopartida" layoutX="195.0" layoutY="324.0" mnemonicParsing="false" onAction="#click" prefHeight="57.0" prefWidth="111.0" styleClass="boton-transparente" stylesheets="@estilos.css" text="Start" />
+   </children>
+</AnchorPane>

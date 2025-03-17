@@ -1,0 +1,41 @@
+.boton-transparente {
+    -fx-background-image: url("https://i.pinimg.com/originals/da/99/65/da996519e3270d5e338d4f66de5478c6.gif");
+    -fx-border-color: transparent;   
+    -fx-text-fill: Lime;             
+    -fx-font-size: 30px;               
+    -fx-font-weight: bold;    
+    -fx-cursor: hand;                   
+    -fx-padding: 5px 10px;      
+    /*-fx-effect:  dropshadow(gaussian, yellow, 4, 0, 2, 1);*/
+}
+/* Efecto al pasar el mouse */
+.boton-transparente:hover {
+    -fx-background-image: url("https://i.gifer.com/7HHu.gif");
+    -fx-text-fill: #fff;             /* Cambia el color del texto */
+}
+/* Fondo del AnchorPane */
+.anchor-pane {
+    -fx-background-image:url("https://www.gifcen.com/wp-content/uploads/2022/01/wallpaper-gif-4.gif");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: top,center;
+}
+
+/* Efecto de borde neón */
+.anchor-pane {
+    -fx-border-color: #8000ff;
+    -fx-border-width: 3px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, #8000ff, 20, 0.7, 0, 0);
+}
+
+/* Animación cuando se pasa el mouse */
+.anchor-pane:hover {
+    -fx-border-color: #ff00ff;
+    -fx-effect: dropshadow(gaussian, red, 20, 0.7, 0, 0);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+
