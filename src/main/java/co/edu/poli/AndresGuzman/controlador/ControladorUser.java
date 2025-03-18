@@ -5,6 +5,8 @@ package co.edu.poli.AndresGuzman.controlador;
 
 import java.io.IOException;
 
+import co.edu.poli.AndresGuzman.modelo.Player;
+import co.edu.poli.AndresGuzman.servicio.DaoPlayer;
 import co.edu.poli.AndresGuzman.vista.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class ControladorUser {
+    private DaoPlayer jugador = new DaoPlayer();
     @FXML
     private Button iniciopartida;
 
@@ -30,12 +33,9 @@ public class ControladorUser {
     */
     @FXML
     void click(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/co/edu/poli/AndresGuzman/partidaConTemp.fxml"));
-        Scene escena = new Scene(fxmlLoader.load());
-        Stage stage = new Stage();
-        stage.setTitle("WordShake");
-        stage.setScene(escena);
-        stage.show();
+        jugador.insertar(new Player(user_name.getText()));
+        App.setRoot("partidaConTemp");
+        user_name.clear();
     }
 
 }

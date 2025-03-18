@@ -23,9 +23,9 @@ public class App extends Application {
     */
     @Override
     public void start(Stage stage) throws IOException {
-        Scene escena = new Scene(loadFXML("paginaInicio"));
+        scene = new Scene(loadFXML("paginaInicio"));
         stage.setTitle("WordShake");
-        stage.setScene(escena);
+        stage.setScene(scene);
         stage.show();
     }
     private static Parent loadFXML(String fxml) throws IOException {
@@ -41,7 +41,10 @@ public class App extends Application {
      * @throws IOException If there is an error loading the specified FXML file.
      */
     public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+        Stage stage = (Stage) scene.getWindow();
+        stage.setTitle(fxml);
+        stage.setScene(loadFXML(fxml));
+        stage.sizeToScene();
     }
 
    /**
