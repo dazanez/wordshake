@@ -9,7 +9,7 @@ import javafx.util.Duration;
 
 public class ControladorTemp {
     private Timeline tiempo = new Timeline();
-    private static final int TIEMPO_PARTIDA = 10;
+    private static final int TIEMPO_PARTIDA = 180;
     private int tiempoRestante;
     
     public void initialize() {
@@ -34,7 +34,7 @@ public class ControladorTemp {
     private void actualizarLabel() {
         int minutos = tiempoRestante / 60;
         int segundos = tiempoRestante % 60;
-        temporizador.setText(String.format("%12d:%02d", minutos, segundos));
+        temporizador.setText(String.format("%02d:%02d", minutos, segundos));
     }
 
     @FXML
@@ -42,12 +42,9 @@ public class ControladorTemp {
     
     @FXML
     void clickReiniciar(ActionEvent event) {
-        // Detener el temporizador actual si está en marcha
         if (tiempo != null) {
             tiempo.stop();
         }
-        
-        // Reiniciar el temporizador
         iniciarTemporizador();
     }
 }
