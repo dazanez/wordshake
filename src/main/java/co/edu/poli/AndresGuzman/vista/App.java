@@ -23,7 +23,7 @@ public class App extends Application {
     */
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("paginaInicio"));
+        scene = new Scene(loadFXML("partidaConTemp"));
         stage.setTitle("WordShake");
         stage.setScene(scene);
         stage.show();
@@ -43,7 +43,7 @@ public class App extends Application {
     public static void setRoot(String fxml) throws IOException {
         Stage stage = (Stage) scene.getWindow();
         stage.setTitle(fxml);
-        stage.setScene(loadFXML(fxml));
+        scene.setRoot(loadFXML(fxml));
         stage.sizeToScene();
     }
 
