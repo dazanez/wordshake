@@ -8,11 +8,8 @@
     -fx-padding: 5px 10px;      
     /*-fx-effect:  dropshadow(gaussian, yellow, 4, 0, 2, 1);*/
 }
-/* Efecto al pasar el mouse */
-
 .boton-transparente:hover {
-    -fx-background-image: url("https://i.gifer.com/7HHu.gif");
-    -fx-text-fill: #fff;             /* Cambia el color del texto */
+    -fx-text-fill: rgb(255, 255, 255);  
 }
 /* Fondo del AnchorPane */
 .anchor-pane {

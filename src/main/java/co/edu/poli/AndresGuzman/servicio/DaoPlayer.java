@@ -31,8 +31,9 @@ public class DaoPlayer implements IDao<Player> {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'listar'");
     }
+
     @Override
-    public Player buscar(int id) {
+    public Player buscar(String nombre) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'buscar'");
     }
