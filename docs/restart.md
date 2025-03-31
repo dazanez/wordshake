@@ -1,0 +1,4 @@
+# Función de reinicio
+**¿Qué es?:** La función de reinicio permite restablecer los valores iniciales de temporizador y de puntaje. El usuario podrá iniciar una nueva partida sin necesidad de cerrar y abrir la aplicación, y esa nueva partida restablecerá los valores de tiempo y puntaje. Es decir, es tiempo será nuevamente de 3 minutos, y el puntaje será 0.
+## ¿Cómo reiniciar la partida?
+Para hacer uso de la función de reinicio, se ha dispuesto un botón dedicado en la pantalla de juego. El usuario puede reconocer este botón que contiene la palabra "reiniciar", si hace clic en el botón, el juego reiniciará el temporizador y el puntaje, así el jugador podrá empezar a jugar de nuevo.
