@@ -3,7 +3,7 @@
 jre-custom
 ejecutable/
 *.exe
-*.exe
+db.properties
 
 ### Eclipse ###
 .metadata

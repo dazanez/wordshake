@@ -108,6 +108,7 @@ public class ControladorTemp {
                 default:
                     break;
             }
+            puntajeT += asignarPuntaje(palabrasIngre.getText());
         }
         else {
             JOptionPane.showMessageDialog(null, "Palabra no encontrada");
@@ -115,6 +116,19 @@ public class ControladorTemp {
         barraPuntaje.setText(String.valueOf(puntajeT));
         palabrasIngre.clear();
         tiempo.play();
+    }
 
+    public static int asignarPuntaje(String palabra) {
+        int longitud = palabra.length();
+
+        if (longitud >= 7) {
+            return 20;
+        } else if (longitud >= 5) {
+            return 10;
+        } else if (longitud >= 3) {
+            return 5;
+        } else {
+            return 0; // Para palabras con menos de 3 letras
+        }
     }
 }

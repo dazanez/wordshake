@@ -2,7 +2,6 @@ package co.edu.poli.AndresGuzman.servicio;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 
 import co.edu.poli.AndresGuzman.modelo.Player;
@@ -17,7 +16,7 @@ public class DaoPlayer implements IDao<Player> {
     public String insertar(Player player) {
         var sql = "INSERT INTO player(username) values(?)";
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
-            ps.setString(1, player.getNombre());
+            ps.setString(1, player.getUsername());
             int filas = ps.executeUpdate();
             return (filas>0)?"Registro Hecho": "Registro No hecho";
         } catch (Exception e) {
