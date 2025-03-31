@@ -8,4 +8,5 @@ public interface IDao<T> {
     String insertar(T t);
     String actualizar(T t);
     String eliminar(int id);
+    T buscarId(int id);
 }

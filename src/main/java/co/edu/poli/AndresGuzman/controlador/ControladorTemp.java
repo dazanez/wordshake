@@ -9,11 +9,18 @@ import co.edu.poli.AndresGuzman.servicio.DaoWords;
 import co.edu.poli.AndresGuzman.vista.App;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+import javafx.scene.control.Alert.AlertType;
 import javafx.util.Duration;
 
 public class ControladorTemp {
@@ -22,6 +29,7 @@ public class ControladorTemp {
     private int tiempoRestante;
     private DaoWords palabras = new DaoWords();
     private int puntajeT = 0;
+    private Alert.AlertType tipoAlerta;
 
     @FXML
     private Label temporizador;
@@ -29,7 +37,7 @@ public class ControladorTemp {
     private Label barraPuntaje;
 
     @FXML
-    private Button bttVerificar;
+    private Button bttVerificar, bttIniciar;
 
     @FXML
     private TextField palabrasIngre;
@@ -42,12 +50,12 @@ public class ControladorTemp {
 
    
 
-    public void initialize() {
-        iniciarTemporizador();
-        barraPuntaje.setText(String.valueOf(puntajeT));
-    }
     
     private void iniciarTemporizador() {
+        if (tiempo != null){
+            tiempo.stop();
+            tiempo.getKeyFrames().clear();
+        }
         tiempoRestante = TIEMPO_PARTIDA;
         actualizarLabel();
             KeyFrame accion = new KeyFrame(Duration.seconds(1), e -> {
@@ -56,15 +64,16 @@ public class ControladorTemp {
                 if (tiempoRestante <= 0) {
                     tiempo.stop();
                     barraPuntaje.setText(String.valueOf(puntajeT));
-                    JOptionPane.showMessageDialog(null, "Se Acabo el Tiempo, tu Puntaje fue: " + puntajeT);
+                    tipoAlerta = Alert.AlertType.INFORMATION;
+                    Platform.runLater(() -> mostrarAlerta("Se Acabo el Tiempo", tipoAlerta));
                     try {
-                        App.setRoot("paginaInicio");
+                        App.setRoot("paginaInicio", "Inicio");
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
                 }
             });
-            tiempo.getKeyFrames().add(accion);
+        tiempo.getKeyFrames().add(accion);
         tiempo.setCycleCount(TIEMPO_PARTIDA);
         tiempo.play();
     }
@@ -75,6 +84,16 @@ public class ControladorTemp {
         temporizador.setText(String.format("%02d:%02d", minutos, segundos));
     }
     
+
+    @FXML
+    void clickIniciar(ActionEvent event) {
+        iniciarTemporizador();
+        bttVerificar.setDisable(false);
+        barraPuntaje.setText(String.valueOf(puntajeT));
+        palabrasIngre.setDisable(false);
+        bttVerificar.setDisable(false);
+        bttIniciar.setDisable(true);
+    }
 
     
     @FXML
@@ -88,33 +107,41 @@ public class ControladorTemp {
     }
 
     @FXML
-    void clickVerificar(ActionEvent event) {
-        Words palabra = palabras.buscar(palabrasIngre.getText());
-        tiempo.pause();
-        if (palabra != null) {
-            JOptionPane.showMessageDialog(null, "Palabra encontrada");
-            String dificultad =palabra.getDifficulty();
-            switch (dificultad) {
-                case "easy":
-                    puntajeT += 10;
-                    break;
-                case "medium":
-                    puntajeT += 20;
-                    break;
-                case "hard":
-                    puntajeT += 30;
-                    break;
-            
-                default:
-                    break;
-            }
-        }
-        else {
-            JOptionPane.showMessageDialog(null, "Palabra no encontrada");
-        }
-        barraPuntaje.setText(String.valueOf(puntajeT));
-        palabrasIngre.clear();
-        tiempo.play();
-
+void clickVerificar(ActionEvent event) {
+    Words palabra = palabras.buscar(palabrasIngre.getText());
+    tiempo.pause();
+    String mensaje;
+    if (palabra != null) {
+        mensaje = "¡Palabra encontrada!";
+        puntajeT = Words.calcularPuntaje(palabra, puntajeT);
+        tipoAlerta = Alert.AlertType.INFORMATION;
+    } else {
+        mensaje = "Palabra no encontrada";
+        tipoAlerta = Alert.AlertType.ERROR;
     }
+    mostrarAlerta(mensaje, tipoAlerta);
+    barraPuntaje.setText(String.valueOf(puntajeT));
+    palabrasIngre.clear();
+    tiempo.play();
+}
+
+private void mostrarAlerta(String mensaje, Alert.AlertType tipo) {
+    tiempo.pause();
+    Alert alerta = new Alert(tipo);
+    alerta.setTitle("Resultado");
+    alerta.getDialogPane().getStylesheets().add(getClass().getResource("/co/edu/poli/AndresGuzman/estilosTiempo.css").toExternalForm());
+    alerta.setHeaderText(null);
+    alerta.setContentText(mensaje);
+    Image imagen = new Image(getClass().getResourceAsStream("/co/edu/poli/AndresGuzman/icono.jpg"));
+    ImageView icono = new ImageView(imagen);
+    icono.setFitHeight(100); // Ajusta el tamaño según necesites
+    icono.setFitWidth(100);
+    alerta.setGraphic(icono);
+    // Cambiar el ícono de la ventana de la alerta
+    Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
+    stage.getIcons().add(new Image(getClass().getResourceAsStream("/co/edu/poli/AndresGuzman/icono.jpg"))); 
+
+    alerta.showAndWait();
+}
+
 }

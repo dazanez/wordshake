@@ -5,17 +5,15 @@ package co.edu.poli.AndresGuzman.controlador;
 
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 import co.edu.poli.AndresGuzman.modelo.Player;
 import co.edu.poli.AndresGuzman.servicio.DaoPlayer;
 import co.edu.poli.AndresGuzman.vista.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 public class ControladorUser {
     private DaoPlayer jugador = new DaoPlayer();
@@ -33,9 +31,22 @@ public class ControladorUser {
     */
     @FXML
     void click(ActionEvent event) throws IOException {
-        jugador.insertar(new Player(user_name.getText()));
-        App.setRoot("partidaConTemp");
-        user_name.clear();
+        if(user_name.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Ingrese Un Usuario", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        else if (user_name.getText() == " ") {
+            JOptionPane.showMessageDialog(null, "Ingrese Un Usuario", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            Player player = jugador.buscar(user_name.getText());
+            if(player != null){
+                jugador.actualizar(player);
+            }
+            else{
+                jugador.insertar(new Player(user_name.getText()));
+            }
+            App.setRoot("partidaConTemp", "Partida de: " + user_name.getText());
+            user_name.clear();
+        }
     }
-
 }
