@@ -128,7 +128,7 @@ void clickVerificar(ActionEvent event) {
 private void mostrarAlerta(String mensaje, Alert.AlertType tipo) {
     tiempo.pause();
     Alert alerta = new Alert(tipo);
-    alerta.setTitle("Resultado");
+    alerta.setTitle("Resultadoo");
     alerta.getDialogPane().getStylesheets().add(getClass().getResource("/co/edu/poli/AndresGuzman/estilosTiempo.css").toExternalForm());
     alerta.setHeaderText(null);
     alerta.setContentText(mensaje);
