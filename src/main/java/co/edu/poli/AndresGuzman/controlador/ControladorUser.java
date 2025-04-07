@@ -16,7 +16,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 public class ControladorUser {
-    private DaoPlayer jugador = new DaoPlayer();
+    public static Player jugador = new Player("default");
+    private DaoPlayer jugadorDao = new DaoPlayer();
     @FXML
     private Button iniciopartida;
 
@@ -34,19 +35,20 @@ public class ControladorUser {
         if(user_name.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Ingrese Un Usuario", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-        else if (user_name.getText() == " ") {
-            JOptionPane.showMessageDialog(null, "Ingrese Un Usuario", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
         else{
-            Player player = jugador.buscar(user_name.getText());
-            if(player != null){
-                jugador.actualizar(player);
+            jugador = jugadorDao.buscar(user_name.getText());
+            if(jugador != null) {
+                jugadorDao.actualizar(jugador);
             }
             else{
-                jugador.insertar(new Player(user_name.getText()));
+                jugadorDao.insertar(new Player(user_name.getText()));
             }
             App.setRoot("partidaConTemp", "Partida de: " + user_name.getText());
             user_name.clear();
         }
+    }
+
+    public Player getJugador(){
+        return jugador;
     }
 }

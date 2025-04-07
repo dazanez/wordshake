@@ -4,7 +4,11 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
+import co.edu.poli.AndresGuzman.modelo.Game;
+import co.edu.poli.AndresGuzman.modelo.Player;
 import co.edu.poli.AndresGuzman.modelo.Words;
+import co.edu.poli.AndresGuzman.servicio.DaoGame;
+import co.edu.poli.AndresGuzman.servicio.DaoPlayer;
 import co.edu.poli.AndresGuzman.servicio.DaoWords;
 import co.edu.poli.AndresGuzman.vista.App;
 import javafx.animation.KeyFrame;
@@ -25,11 +29,12 @@ import javafx.util.Duration;
 
 public class ControladorTemp {
     private Timeline tiempo = new Timeline();
-    private static final int TIEMPO_PARTIDA = 180;
+    private static final int TIEMPO_PARTIDA = 10;
     private int tiempoRestante;
     private DaoWords palabras = new DaoWords();
     private int puntajeT = 0;
     private Alert.AlertType tipoAlerta;
+
 
     @FXML
     private Label temporizador;
@@ -64,6 +69,7 @@ public class ControladorTemp {
                 if (tiempoRestante <= 0) {
                     tiempo.stop();
                     barraPuntaje.setText(String.valueOf(puntajeT));
+                    guardarPuntaje();
                     tipoAlerta = Alert.AlertType.INFORMATION;
                     Platform.runLater(() -> mostrarAlerta("Se Acabo el Tiempo", tipoAlerta));
                     try {
@@ -143,5 +149,14 @@ private void mostrarAlerta(String mensaje, Alert.AlertType tipo) {
 
     alerta.showAndWait();
 }
+
+  public void guardarPuntaje() {
+        Game game = new Game(ControladorUser.jugador.getId(), puntajeT);
+        new DaoGame().insertar(game);
+    }
+
+    public static void setJugador(String username) {
+        ControladorUser.jugador = new DaoPlayer().buscar(username);
+    }
 
 }
