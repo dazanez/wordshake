@@ -42,7 +42,7 @@
             </LinearGradient>
          </textFill>
       </Label>
-      <TextField fx:id="user_name" alignment="CENTER" layoutX="148.0" layoutY="204.0" prefHeight="46.0" prefWidth="210.0" promptText="UserName">
+      <TextField fx:id="username" alignment="CENTER" layoutX="148.0" layoutY="204.0" prefHeight="46.0" prefWidth="210.0" promptText="UserName">
          <effect>
             <DropShadow height="38.59" radius="18.0625" spread="0.61" width="35.66">
                <color>

@@ -10,12 +10,8 @@ import co.edu.poli.AndresGuzman.servicio.DaoPlayer;
 import co.edu.poli.AndresGuzman.vista.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 public class ControladorUser {
     private DaoPlayer jugador = new DaoPlayer();
@@ -23,7 +19,7 @@ public class ControladorUser {
     private Button iniciopartida;
 
     @FXML
-    private TextField user_name;
+    private TextField username;
 
    /**
     * The click function is an event handler in JavaFXML that takes an ActionEvent as a parameter.
@@ -33,9 +29,11 @@ public class ControladorUser {
     */
     @FXML
     void click(ActionEvent event) throws IOException {
-        jugador.insertar(new Player(user_name.getText()));
+        String usernameStr = username.getText();
+        jugador.insertar(new Player(usernameStr));
+        ControladorTemp.setJugador(usernameStr);
         App.setRoot("partidaConTemp");
-        user_name.clear();
+        username.clear();
     }
 
 }

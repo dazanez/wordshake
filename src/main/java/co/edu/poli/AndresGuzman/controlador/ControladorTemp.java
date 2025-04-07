@@ -4,7 +4,11 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
+import co.edu.poli.AndresGuzman.modelo.Game;
+import co.edu.poli.AndresGuzman.modelo.Player;
 import co.edu.poli.AndresGuzman.modelo.Words;
+import co.edu.poli.AndresGuzman.servicio.DaoGame;
+import co.edu.poli.AndresGuzman.servicio.DaoPlayer;
 import co.edu.poli.AndresGuzman.servicio.DaoWords;
 import co.edu.poli.AndresGuzman.vista.App;
 import javafx.animation.KeyFrame;
@@ -40,7 +44,7 @@ public class ControladorTemp {
     @FXML
     private Label temporizador1;
 
-   
+    private static Player jugador = new Player("default");
 
     public void initialize() {
         iniciarTemporizador();
@@ -56,6 +60,7 @@ public class ControladorTemp {
                 if (tiempoRestante <= 0) {
                     tiempo.stop();
                     barraPuntaje.setText(String.valueOf(puntajeT));
+                    guardarPuntaje();
                     JOptionPane.showMessageDialog(null, "Se Acabo el Tiempo, tu Puntaje fue: " + puntajeT);
                     try {
                         App.setRoot("paginaInicio");
@@ -130,5 +135,14 @@ public class ControladorTemp {
         } else {
             return 0; // Para palabras con menos de 3 letras
         }
+    }
+
+    public void guardarPuntaje() {
+        Game game = new Game(jugador.getId(), puntajeT);
+        new DaoGame().insertar(game);
+    }
+
+    public static void setJugador(String username) {
+        jugador = new DaoPlayer().buscar(username);
     }
 }
