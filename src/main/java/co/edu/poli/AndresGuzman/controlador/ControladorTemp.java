@@ -1,11 +1,7 @@
 package co.edu.poli.AndresGuzman.controlador;
 
 import java.io.IOException;
-
-import javax.swing.JOptionPane;
-
 import co.edu.poli.AndresGuzman.modelo.Game;
-import co.edu.poli.AndresGuzman.modelo.Player;
 import co.edu.poli.AndresGuzman.modelo.Words;
 import co.edu.poli.AndresGuzman.servicio.DaoGame;
 import co.edu.poli.AndresGuzman.servicio.DaoPlayer;
@@ -18,13 +14,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import javafx.scene.control.Alert.AlertType;
 import javafx.util.Duration;
 
 public class ControladorTemp {
