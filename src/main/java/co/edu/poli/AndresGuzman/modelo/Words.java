@@ -1,4 +1,10 @@
 package co.edu.poli.AndresGuzman.modelo;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 public class Words {
     private int id;
     private String word;
@@ -61,6 +67,50 @@ public class Words {
             puntaje += 20;
         }
         return puntaje;
+    }
+
+    public static List<Character> generarLetras(int numLetras) {
+        ArrayList<String> palabras = new ArrayList<>(Arrays.asList(
+                "abecedario",    // A, B, C, D, E
+                "fácil",         // F, A, C, I, L
+                "gente",         // G, E, N, T
+                "horizonte",     // H, O, R, I, Z
+                "jabón",         // J, A, B, O, N
+                "kilómetro",     // K, I, L, O, M, E, T
+                "luna",          // L, U, N, A
+                "mujer",         // M, U, J, E, R
+                "naranja",       // N, A, R, J
+                "océano",        // O, C, E, A, N
+                "paz",           // P, A, Z
+                "químico",       // Q, U, I, M, C, O
+                "río",           // R, I, O
+                "salvaje",       // S, A, L, V, J, E
+                "tesoro",        // T, E, S, O, R
+                "viento",        // V, I, E, N, T, O
+                "xenón",         // X, E, N, O
+                "yogur",         // Y, O, G, U, R
+                "zorro"          // Z, O, R
+        ));
+
+        List<Character> letras = new ArrayList<>();
+        Random random = new Random();
+
+        // Repetimos hasta que tengamos la cantidad deseada de letras
+        while (letras.size() < numLetras) {
+            // Selección aleatoria de una palabra
+            String palabra = palabras.get(random.nextInt(palabras.size()));
+
+            // Añadimos las letras de la palabra seleccionada
+            for (char c : palabra.toCharArray()) {
+                if (letras.size() < numLetras) {
+                    letras.add(c);
+                } else {
+                    break;
+                }
+            }
+        }
+
+        return letras;
     }
 
     @Override

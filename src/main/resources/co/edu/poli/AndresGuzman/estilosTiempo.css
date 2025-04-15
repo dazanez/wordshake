@@ -1,6 +1,6 @@
 .panelTiempo {
     -fx-background-color: linear-gradient(to bottom, #6a00f4, #3d009c);
-    -fx-background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/fs/9bc27292880429.5e569ff84e4d0.gif");
+    /*-fx-background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/fs/9bc27292880429.5e569ff84e4d0.gif");*/
     -fx-border-color: #9400d3;
     -fx-border-width: 8px;
     -fx-border-radius: 15px;
@@ -43,6 +43,45 @@
     -fx-scale-x: 1;
     -fx-scale-y: 1;
 }
+
+/* Estilo base para las celdas tipo botón */
+.label-letter {
+    -fx-background-color: linear-gradient(to bottom, #00ffea, #009688); /* Degradado azul-verde */
+    -fx-text-fill: white;                    /* Color de texto blanco */
+    -fx-font-weight: bold;                   /* Texto en negrita */
+    -fx-font-size: 14px;                     /* Tamaño de fuente */
+    -fx-border-radius: 15px;                 /* Bordes redondeados */
+    -fx-background-radius: 15px;             /* Radio de fondo redondeado */
+    -fx-padding: 8px 15px;                   /* Espaciado interno */
+    -fx-effect: dropshadow(gaussian, #00ffff80, 5, 0.3, 0, 3); /* Sombra azul */
+    -fx-alignment: center;
+
+    /* Transiciones suaves */
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+/* Efecto de hover: cuando el mouse está sobre el label */
+.label-letter:hover {
+    -fx-background-color: linear-gradient(to bottom, #00d4d1, #00897b); /* Degradado más oscuro */
+    -fx-effect: dropshadow(gaussian, #00ffff, 3, 0.4, 0, 3); /* Sombra más pronunciada */
+    -fx-cursor: hand; /* Cambia el cursor a mano, como si fuera un botón */
+}
+
+/* Efecto de presionado: cuando el label es clickeado */
+.label-letter:pressed {
+    -fx-background-color: linear-gradient(to bottom, #00b8a3, #00796b); /* Degradado aún más oscuro */
+    -fx-effect: dropshadow(gaussian, #00ffff, 12, 0.6, 0, 6); /* Sombra más intensa */
+    -fx-scale-x: 0.95; /* Efecto de reducir el tamaño para dar un efecto de presión */
+    -fx-scale-y: 0.95; /* Reducción del tamaño en ambas dimensiones */
+}
+
+/* Efecto de foco: si se enfoca el Label (por ejemplo, con teclado) */
+.label-letter:focused {
+    -fx-border-color: #ff4081;  /* Resalta con color rosa al enfocar */
+    -fx-border-width: 2px;      /* Borde de 2px */
+    -fx-background-color: linear-gradient(to bottom, #00ffea, #009688); /* Vuelve al color original */
+}
+
 
 .text-field {
     -fx-background-color: #1a1a1a;

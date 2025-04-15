@@ -16,7 +16,7 @@ public class DaoPlayer implements IDao<Player> {
 
     @Override
     public String insertar(Player player) {
-        var sql = "INSERT INTO player(username) values(?)";
+        var sql = "INSERT INTO players(username) values(?)";
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setString(1, player.getUsername());
             int filas = ps.executeUpdate();
@@ -41,7 +41,7 @@ public class DaoPlayer implements IDao<Player> {
 
     @Override
     public String actualizar(Player t) {
-        var sql = "UPDATE player SET signup_date = CURRENT_TIMESTAMP WHERE id = ?";
+        var sql = "UPDATE players SET signup_date = CURRENT_TIMESTAMP WHERE id = ?";
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setInt(1, t.getId());
             int exito = ps.executeUpdate();
@@ -60,7 +60,7 @@ public class DaoPlayer implements IDao<Player> {
     @Override
     public Player buscar(String nombre) {
         Player player = null;
-        var sql = "SELECT * FROM player WHERE username = ?";
+        var sql = "SELECT * FROM players WHERE username = ?";
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setString(1, nombre);
             try(ResultSet rs = ps.executeQuery()){

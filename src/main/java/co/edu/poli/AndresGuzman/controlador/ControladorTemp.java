@@ -1,6 +1,8 @@
 package co.edu.poli.AndresGuzman.controlador;
 
 import java.io.IOException;
+import java.util.List;
+
 import co.edu.poli.AndresGuzman.modelo.Game;
 import co.edu.poli.AndresGuzman.modelo.Words;
 import co.edu.poli.AndresGuzman.servicio.DaoGame;
@@ -18,17 +20,22 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class ControladorTemp {
     private Timeline tiempo = new Timeline();
-    private static final int TIEMPO_PARTIDA = 10;
+    private static final int TIEMPO_PARTIDA = 100;
     private int tiempoRestante;
     private DaoWords palabras = new DaoWords();
     private int puntajeT = 0;
     private Alert.AlertType tipoAlerta;
 
+
+    @FXML
+    private GridPane boardGrid;
 
     @FXML
     private Label temporizador;
@@ -39,15 +46,13 @@ public class ControladorTemp {
     private Button bttVerificar, bttIniciar;
 
     @FXML
-    private TextField palabrasIngre;
+    private TextField palabraInput;
 
     @FXML
     private Label puntaje;
 
     @FXML
     private Label temporizador1;
-
-
 
 
     private void iniciarTemporizador() {
@@ -57,6 +62,7 @@ public class ControladorTemp {
         }
         tiempoRestante = TIEMPO_PARTIDA;
         actualizarLabel();
+        cargarLetras();
         KeyFrame accion = new KeyFrame(Duration.seconds(1), e -> {
             tiempoRestante--;
             actualizarLabel();
@@ -90,7 +96,7 @@ public class ControladorTemp {
         iniciarTemporizador();
         bttVerificar.setDisable(false);
         barraPuntaje.setText(String.valueOf(puntajeT));
-        palabrasIngre.setDisable(false);
+        palabraInput.setDisable(false);
         bttVerificar.setDisable(false);
         bttIniciar.setDisable(true);
     }
@@ -108,7 +114,7 @@ public class ControladorTemp {
 
     @FXML
     void clickVerificar(ActionEvent event) {
-        Words palabra = palabras.buscar(palabrasIngre.getText());
+        Words palabra = palabras.buscar(palabraInput.getText());
         tiempo.pause();
         String mensaje;
         if (palabra != null) {
@@ -121,7 +127,7 @@ public class ControladorTemp {
         }
         mostrarAlerta(mensaje, tipoAlerta);
         barraPuntaje.setText(String.valueOf(puntajeT));
-        palabrasIngre.clear();
+        palabraInput.clear();
         tiempo.play();
     }
 
@@ -147,6 +153,41 @@ public class ControladorTemp {
     public void guardarPuntaje() {
         Game game = new Game(ControladorUser.jugador.getId(), puntajeT);
         new DaoGame().insertar(game);
+    }
+
+    public void cargarLetras() {
+        List<Character> letras = Words.generarLetras(16);
+        int index = 0; // Para llevar un seguimiento del índice de letras en el ArrayList
+        int totalRows = boardGrid.getRowCount();
+        int totalColumns = boardGrid.getColumnCount();
+
+        // Recorremos las filas (0 a 3) y las columnas (0 a 3) para agregar las celdas
+        for (int row = 0; row < totalRows; row++) {
+            for (int col = 0; col < totalColumns; col++) {
+                // Crear un nuevo Label y asignar la letra de la lista
+                Label label = new Label(letras.get(index).toString());
+                label.getStyleClass().add("label-letter");
+                label.setOnMouseClicked(this::handleCellClick);  // Asociamos el evento de clic
+                boardGrid.add(label, col, row);  // Añadimos el label en la posición correspondiente
+                index++;  // Avanzamos al siguiente índice de la lista
+            }
+        }
+    }
+
+    // Método para manejar el clic en una celda
+    @FXML
+    public void handleCellClick(MouseEvent event) {
+        // Obtener el Label que fue clickeado
+        Label clickedLabel = (Label) event.getSource();
+
+
+        // Obtener el texto (letra) de la celda
+        String letra = clickedLabel.getText();
+        palabraInput.setText(palabraInput.getText() + letra);
+
+
+        // Aquí puedes hacer lo que necesites con la letra seleccionada
+//        System.out.println("¡Se ha hecho clic en la letra: " + letra + "!");
     }
 
     public static void setJugador(String username) {
