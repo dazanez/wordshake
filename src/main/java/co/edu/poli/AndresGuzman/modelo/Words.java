@@ -1,9 +1,6 @@
 package co.edu.poli.AndresGuzman.modelo;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Words {
     private int id;
@@ -109,6 +106,8 @@ public class Words {
                 }
             }
         }
+
+        Collections.shuffle(letras);
 
         return letras;
     }
