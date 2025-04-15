@@ -28,7 +28,7 @@
     -fx-border-radius: 15px;
     -fx-background-radius: 15px;
     -fx-padding: 10px 20px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 255, 255, 0.5), 5, 0.3, 0, 5);
+    -fx-effect: dropshadow(gaussian, #00ffff80, 5, 0.3, 0, 5);
     -fx-transition: all 0.3s ease-in-out;
 }
 
@@ -101,4 +101,27 @@
     -fx-padding: 10px;
     -fx-border-radius: 15px;
     -fx-background-radius: 15px;
+}
+.alert {
+    -fx-background-color: linear-gradient(to right, #ff0080, #8000ff);
+    -fx-border-color: white;
+    -fx-border-width: 3px;
+    -fx-border-radius: 10px;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, #ff00ff, 15, 0.7, 0, 0);
+}
+
+.alert .button-bar .button {
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-padding: 5px 10px;
+}
+
+.alert .content {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
 }

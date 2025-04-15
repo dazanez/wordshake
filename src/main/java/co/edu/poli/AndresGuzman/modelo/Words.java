@@ -34,6 +34,35 @@ public class Words {
         this.difficulty = difficulty;
     }
 
+    public static int calcularPuntaje(Words palabra, int puntaje){
+        String dificultad = palabra.getDifficulty();
+        int extension = palabra.getWord().length();
+        switch (dificultad) {
+            case "easy":
+                puntaje += 10;
+                break;
+            case "medium":
+                puntaje += 20;
+                break;
+            case "hard":
+                puntaje += 30;
+                break;
+        
+            default:
+                break;
+        }
+        if (extension >= 3 && extension <= 4) {
+            puntaje += 5;
+        }
+        else if(extension >= 5 && extension <= 6){
+            puntaje += 10;
+        }
+        else if(extension >= 7){
+            puntaje += 20;
+        }
+        return puntaje;
+    }
+
     @Override
     public String toString() {
         return "Word{" +

@@ -23,7 +23,7 @@ public class DaoWords implements IDao<Words>{
 
     @Override
     public Words buscar(String palabra) {
-        var sql = "SELECT difficulty FROM words WHERE LOWER(word) = LOWER(?)";
+        var sql = "SELECT difficulty FROM words WHERE LOWER(word) = ?";
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setString(1, palabra.toLowerCase());
             try (ResultSet rs = ps.executeQuery()) {
@@ -53,6 +53,12 @@ public class DaoWords implements IDao<Words>{
     public String eliminar(int id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'eliminar'");
+    }
+
+    @Override
+    public Words buscarId(int id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buscarId'");
     }
 
 }

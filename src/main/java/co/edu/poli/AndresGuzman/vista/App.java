@@ -40,9 +40,9 @@ public class App extends Application {
      * @param fxml The name of the FXML file to load, excluding the ".fxml" extension.
      * @throws IOException If there is an error loading the specified FXML file.
      */
-    public static void setRoot(String fxml) throws IOException {
+    public static void setRoot(String fxml,String titulo) throws IOException {
         Stage stage = (Stage) scene.getWindow();
-        stage.setTitle(fxml);
+        stage.setTitle(titulo);
         scene.setRoot(loadFXML(fxml));
         stage.sizeToScene();
     }

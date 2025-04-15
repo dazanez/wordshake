@@ -5,6 +5,8 @@ package co.edu.poli.AndresGuzman.controlador;
 
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 import co.edu.poli.AndresGuzman.modelo.Player;
 import co.edu.poli.AndresGuzman.servicio.DaoPlayer;
 import co.edu.poli.AndresGuzman.vista.App;
@@ -14,26 +16,39 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 public class ControladorUser {
-    private DaoPlayer jugador = new DaoPlayer();
+    public static Player jugador = new Player("default");
+    private DaoPlayer jugadorDao = new DaoPlayer();
     @FXML
     private Button iniciopartida;
 
     @FXML
-    private TextField username;
+    private TextField user_name;
 
-   /**
-    * The click function is an event handler in JavaFXML that takes an ActionEvent as a parameter.
-    * 
-    * @param event The `event` parameter in the `click` method is of type `ActionEvent`. It represents the event that occurred, such as a button click or menu item selection, that triggered the method to be called. You can use this parameter to access information about the event or perform actions based on the
- * @throws IOException 
-    */
+    /**
+     * The click function is an event handler in JavaFXML that takes an ActionEvent as a parameter.
+     *
+     * @param event The `event` parameter in the `click` method is of type `ActionEvent`. It represents the event that occurred, such as a button click or menu item selection, that triggered the method to be called. You can use this parameter to access information about the event or perform actions based on the
+     * @throws IOException
+     */
     @FXML
     void click(ActionEvent event) throws IOException {
-        String usernameStr = username.getText();
-        jugador.insertar(new Player(usernameStr));
-        ControladorTemp.setJugador(usernameStr);
-        App.setRoot("partidaConTemp");
-        username.clear();
+        if(user_name.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Ingrese Un Usuario", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            jugador = jugadorDao.buscar(user_name.getText());
+            if(jugador != null) {
+                jugadorDao.actualizar(jugador);
+            }
+            else{
+                jugadorDao.insertar(new Player(user_name.getText()));
+            }
+            App.setRoot("partidaConTemp", "Partida de: " + user_name.getText());
+            user_name.clear();
+        }
     }
 
+    public Player getJugador(){
+        return jugador;
+    }
 }
