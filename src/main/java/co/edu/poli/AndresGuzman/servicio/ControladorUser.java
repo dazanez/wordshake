@@ -1,7 +1,7 @@
 /**
  * The class ControladorUser is a Java controller class for a user interface that includes a button for starting a game and a text field for entering a user name.
  */
-package co.edu.poli.AndresGuzman.controlador;
+package co.edu.poli.AndresGuzman.servicio;
 
 import java.io.IOException;
 
@@ -48,7 +48,7 @@ public class ControladorUser {
         }
     }
 
-    public static Player getJugador(){
+    public Player getJugador(){
         return jugador;
     }
 }

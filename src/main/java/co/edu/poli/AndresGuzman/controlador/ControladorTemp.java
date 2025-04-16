@@ -9,7 +9,9 @@ import co.edu.poli.AndresGuzman.servicio.DaoGame;
 import co.edu.poli.AndresGuzman.servicio.DaoPlayer;
 import co.edu.poli.AndresGuzman.servicio.DaoWords;
 import co.edu.poli.AndresGuzman.vista.App;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
+import javafx.animation.ParallelTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -22,23 +24,25 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class ControladorTemp {
     private Timeline tiempo = new Timeline();
-    private static final int TIEMPO_PARTIDA = 100;
+    private static final int TIEMPO_PARTIDA = 120;
     private int tiempoRestante;
     private DaoWords palabras = new DaoWords();
     private int puntajeT = 0;
     private Alert.AlertType tipoAlerta;
 
-
+    @FXML
+    private ImageView iconoMensaje;
     @FXML
     private GridPane boardGrid;
 
     @FXML
-    private Label temporizador;
+    private Label temporizador, mensajeExito;
     @FXML
     private Label barraPuntaje;
 
@@ -71,7 +75,7 @@ public class ControladorTemp {
                 barraPuntaje.setText(String.valueOf(puntajeT));
                 guardarPuntaje();
                 tipoAlerta = Alert.AlertType.INFORMATION;
-                Platform.runLater(() -> mostrarAlerta("Se Acabo el Tiempo", tipoAlerta));
+                Platform.runLater(() -> mostrarAlerta("Se Acabo el Tiempo " + ControladorUser.getJugador().getUsername(), tipoAlerta));
                 try {
                     App.setRoot("paginaInicio", "Inicio");
                 } catch (IOException e1) {
@@ -82,6 +86,28 @@ public class ControladorTemp {
         tiempo.getKeyFrames().add(accion);
         tiempo.setCycleCount(TIEMPO_PARTIDA);
         tiempo.play();
+    }
+
+    private void mostrarAlerta(String mensaje, Alert.AlertType tipo) {
+        tiempo.pause();
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle("Resultadoo");
+        alerta.getDialogPane().getStylesheets().add(getClass().getResource("/co/edu/poli/AndresGuzman/estilosTiempo.css").toExternalForm());
+        alerta.getDialogPane().setPrefWidth(450);
+        alerta.getDialogPane().setPrefHeight(220);
+        alerta.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje + "\n Tu Puntaje fue: " + puntajeT + "Pts.");
+        Image imagen = new Image(getClass().getResourceAsStream("/co/edu/poli/AndresGuzman/timeout.png"));
+        ImageView icono = new ImageView(imagen);
+        icono.setFitHeight(150);
+        icono.setFitWidth(100);
+        alerta.setGraphic(icono);
+        // Cambiar el ícono de la ventana de la alerta
+        Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/co/edu/poli/AndresGuzman/icono.jpg")));
+
+        alerta.showAndWait();
     }
 
     private void actualizarLabel() {
@@ -114,6 +140,7 @@ public class ControladorTemp {
 
     @FXML
     void clickVerificar(ActionEvent event) {
+        Boolean esExito;
         Words palabra = palabras.buscar(palabraInput.getText());
         tiempo.pause();
         String mensaje;
@@ -121,34 +148,47 @@ public class ControladorTemp {
             mensaje = "¡Palabra encontrada!";
             puntajeT = Words.calcularPuntaje(palabra, puntajeT);
             tipoAlerta = Alert.AlertType.INFORMATION;
+            esExito = true;
         } else {
             mensaje = "Palabra no encontrada";
             tipoAlerta = Alert.AlertType.ERROR;
+            esExito = false;
         }
-        mostrarAlerta(mensaje, tipoAlerta);
+        mostrarMensajeAnimado(mensaje, esExito);
         barraPuntaje.setText(String.valueOf(puntajeT));
         palabraInput.clear();
         tiempo.play();
     }
 
-    private void mostrarAlerta(String mensaje, Alert.AlertType tipo) {
-        tiempo.pause();
-        Alert alerta = new Alert(tipo);
-        alerta.setTitle("Resultadoo");
-        alerta.getDialogPane().getStylesheets().add(getClass().getResource("/co/edu/poli/AndresGuzman/estilosTiempo.css").toExternalForm());
-        alerta.setHeaderText(null);
-        alerta.setContentText(mensaje);
-        Image imagen = new Image(getClass().getResourceAsStream("/co/edu/poli/AndresGuzman/icono.jpg"));
-        ImageView icono = new ImageView(imagen);
-        icono.setFitHeight(100); // Ajusta el tamaño según necesites
-        icono.setFitWidth(100);
-        alerta.setGraphic(icono);
-        // Cambiar el ícono de la ventana de la alerta
-        Stage stage = (Stage) alerta.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/co/edu/poli/AndresGuzman/icono.jpg")));
+    private void mostrarMensajeAnimado(String mensaje, boolean esExito) {
+        Image imagen = new Image(getClass().getResource(esExito? "/co/edu/poli/AndresGuzman/aprobacion.png" : "/co/edu/poli/AndresGuzman/desapruebo.png").toExternalForm());
+        iconoMensaje.setImage(imagen);
+        iconoMensaje.setFitWidth(115);
+        iconoMensaje.setFitHeight(86);
+        mensajeExito.setText(mensaje);
+        iconoMensaje.setOpacity(1.0);
+        iconoMensaje.setVisible(true);
 
-        alerta.showAndWait();
+        mensajeExito.setOpacity(1.0);
+        mensajeExito.setVisible(true);
+
+        FadeTransition fadeTexto = new FadeTransition(Duration.seconds(5), mensajeExito);
+        fadeTexto.setFromValue(1.0);
+        fadeTexto.setToValue(0.0);
+
+        FadeTransition fadeIcono = new FadeTransition(Duration.seconds(5), iconoMensaje);
+        fadeIcono.setFromValue(1.0);
+        fadeIcono.setToValue(0.0);
+
+        ParallelTransition parallel = new ParallelTransition(fadeTexto, fadeIcono);
+        parallel.setOnFinished(e -> {
+            mensajeExito.setVisible(false);
+            iconoMensaje.setVisible(false);
+        });
+        parallel.play();
+
     }
+
 
     public void guardarPuntaje() {
         Game game = new Game(ControladorUser.jugador.getId(), puntajeT);

@@ -151,16 +151,23 @@
     -fx-font-weight: bold;
     -fx-effect: dropshadow(gaussian, #ff00ff, 15, 0.7, 0, 0);
 }
-
-.alert .button-bar .button {
+.dialog-pane .button-bar .button {
     -fx-background-color: white;
     -fx-border-color: black;
     -fx-text-fill: black;
     -fx-font-size: 14px;
-    -fx-padding: 5px 10px;
+    -fx-padding: 0px 0px;
+    -fx-layout-y: -10px; /* Mueve el botón más hacia arriba */
+}
+
+
+.alert .dialog-pane {
+    -fx-padding: 10px;
+    -fx-pref-width: 250px;
+    -fx-pref-height: 120px;
 }
 
 .alert .content {
-    -fx-text-fill: white;
     -fx-font-size: 16px;
+    -fx-text-fill: white;
 }
