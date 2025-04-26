@@ -24,17 +24,29 @@ public class DaoWords implements IDao<Words>{
     @Override
     public Words buscar(String palabra) {
         var sql = "SELECT difficulty FROM words WHERE LOWER(word) = ?";
-        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+        var sqlPalabra = "SELECT * FROM palabraenc WHERE palabra =?";
+        var sqlNuevo = "INSERT INTO palabraEnc VALUES(?)";
+        try (PreparedStatement ps = conexion.prepareStatement(sql);
+            PreparedStatement psPalabra = conexion.prepareStatement(sqlPalabra);
+            PreparedStatement psEncontrada = conexion.prepareStatement(sqlNuevo)) {
             ps.setString(1, palabra.toLowerCase());
+            psPalabra.setString(1, palabra);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
+                    try(ResultSet rs2 =psPalabra.executeQuery()){
+                        if(rs2.next()){
+                            return new Words("Ya Usada");
+                        }
+                    }
+                    psEncontrada.setString(1, palabra);
+                    psEncontrada.executeUpdate();
                     return new Words(palabra, Difficulty.valueOf(rs.getString("difficulty")));
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return new Words("No Encontrada");
     }
 
     @Override
@@ -50,9 +62,15 @@ public class DaoWords implements IDao<Words>{
     }
 
     @Override
-    public String eliminar(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'eliminar'");
+    public String eliminar(int id){
+        var sql = "DELETE FROM palabraenc";
+        try(PreparedStatement ps = conexion.prepareStatement(sql)){
+            int filas = ps.executeUpdate();
+            return filas>0 ?"todo bien":"todo mal";
+        }
+        catch (Exception e) {
+            return "Error con la bd";
+        }
     }
 
     @Override

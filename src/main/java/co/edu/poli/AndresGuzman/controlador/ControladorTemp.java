@@ -3,6 +3,8 @@ package co.edu.poli.AndresGuzman.controlador;
 import java.io.IOException;
 import java.util.List;
 
+import javax.print.DocFlavor.STRING;
+
 import co.edu.poli.AndresGuzman.modelo.Game;
 import co.edu.poli.AndresGuzman.modelo.Words;
 import co.edu.poli.AndresGuzman.servicio.DaoGame;
@@ -30,7 +32,7 @@ import javafx.util.Duration;
 
 public class ControladorTemp {
     private Timeline tiempo = new Timeline();
-    private static final int TIEMPO_PARTIDA = 120;
+    private static final int TIEMPO_PARTIDA = 20;
     private int tiempoRestante;
     private DaoWords palabras = new DaoWords();
     private int puntajeT = 0;
@@ -47,7 +49,7 @@ public class ControladorTemp {
     private Label barraPuntaje;
 
     @FXML
-    private Button bttVerificar, bttIniciar;
+    private Button bttVerificar, bttIniciar,bttBorrar;;
 
     @FXML
     private TextField palabraInput;
@@ -75,6 +77,7 @@ public class ControladorTemp {
                 barraPuntaje.setText(String.valueOf(puntajeT));
                 guardarPuntaje();
                 tipoAlerta = Alert.AlertType.INFORMATION;
+                palabras.eliminar(1);
                 Platform.runLater(() -> mostrarAlerta("Se Acabo el Tiempo " + ControladorUser.getJugador().getUsername(), tipoAlerta));
                 try {
                     App.setRoot("paginaInicio", "Inicio");
@@ -134,6 +137,7 @@ public class ControladorTemp {
             tiempo.stop();
             puntajeT = 0;
             barraPuntaje.setText(String.valueOf(puntajeT));
+            palabras.eliminar(1);
         }
         iniciarTemporizador();
     }
@@ -144,12 +148,19 @@ public class ControladorTemp {
         Words palabra = palabras.buscar(palabraInput.getText());
         tiempo.pause();
         String mensaje;
-        if (palabra != null) {
+
+        if (palabra.getWord().equals("Ya Usada")) {
+            mensaje = "Palabra Ya Usada";
+            tipoAlerta = Alert.AlertType.ERROR;
+            esExito = false;
+        }
+        else if (!palabra.getWord().equals("No Encontrada")) {
             mensaje = "¡Palabra encontrada!";
             puntajeT = Words.calcularPuntaje(palabra, puntajeT);
             tipoAlerta = Alert.AlertType.INFORMATION;
             esExito = true;
-        } else {
+        } 
+        else {
             mensaje = "Palabra no encontrada";
             tipoAlerta = Alert.AlertType.ERROR;
             esExito = false;
@@ -196,7 +207,7 @@ public class ControladorTemp {
     }
 
     public void cargarLetras() {
-        List<Character> letras = Words.generarLetras(16);
+        List<Character> letras = Words.generarLetras(160);
         int index = 0; // Para llevar un seguimiento del índice de letras en el ArrayList
         int totalRows = boardGrid.getRowCount();
         int totalColumns = boardGrid.getColumnCount();
@@ -232,6 +243,16 @@ public class ControladorTemp {
 
     public static void setJugador(String username) {
         ControladorUser.jugador = new DaoPlayer().buscar(username);
+    }
+
+    
+    @FXML
+    void clickBorrar(ActionEvent event) {
+        if(!palabraInput.getText().isEmpty()){
+            String palabra = palabraInput.getText();
+            String palabraError = palabra.substring(0,palabra.length()-1);
+            palabraInput.setText(palabraError);
+        }
     }
 
 }

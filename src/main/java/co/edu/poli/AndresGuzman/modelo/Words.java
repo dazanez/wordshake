@@ -15,6 +15,10 @@ public class Words {
         this.word = word;
         this.difficulty = (difficulty != null) ? difficulty : Difficulty.easy;
     }
+
+    public Words(String palabra) {
+        this.word =palabra;
+    }
     public int getId() {
         return id;
     }

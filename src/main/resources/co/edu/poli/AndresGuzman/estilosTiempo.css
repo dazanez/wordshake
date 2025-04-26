@@ -32,6 +32,30 @@
     -fx-transition: all 0.3s ease-in-out;
 }
 
+.bttx {
+    -fx-background-color: linear-gradient(to bottom, #f27772, #490606);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-border-radius: 1px !important;
+    -fx-background-radius: 5px;
+    -fx-padding: 3px 3px !important;
+    -fx-effect: none;
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+.bttx:hover {
+    -fx-background-color: linear-gradient(to bottom,  #fe2018, #7b0a0a) !important;
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+}
+
+.bttx:pressed {
+    -fx-background-color: #7b0a0a !important;
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+}
+
 .button:hover {
     -fx-background-color: linear-gradient(to bottom, #33ffee, #00ccaa);
     -fx-scale-x: 1.1;
