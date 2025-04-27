@@ -32,7 +32,7 @@ import javafx.util.Duration;
 
 public class ControladorTemp {
     private Timeline tiempo = new Timeline();
-    private static final int TIEMPO_PARTIDA = 20;
+    private static final int TIEMPO_PARTIDA = 180;
     private int tiempoRestante;
     private DaoWords palabras = new DaoWords();
     private int puntajeT = 0;
@@ -49,7 +49,7 @@ public class ControladorTemp {
     private Label barraPuntaje;
 
     @FXML
-    private Button bttVerificar, bttIniciar,bttBorrar;;
+    private Button bttVerificar, bttIniciar,bttBorrar, bttRefrescar, bttRei;
 
     @FXML
     private TextField palabraInput;
@@ -128,6 +128,9 @@ public class ControladorTemp {
         palabraInput.setDisable(false);
         bttVerificar.setDisable(false);
         bttIniciar.setDisable(true);
+        bttRefrescar.setDisable(false);
+        bttBorrar.setDisable(false);
+        bttRei.setDisable(false);
     }
 
 
@@ -207,7 +210,7 @@ public class ControladorTemp {
     }
 
     public void cargarLetras() {
-        List<Character> letras = Words.generarLetras(160);
+        List<Character> letras = Words.generarLetras(25);
         int index = 0; // Para llevar un seguimiento del índice de letras en el ArrayList
         int totalRows = boardGrid.getRowCount();
         int totalColumns = boardGrid.getColumnCount();
@@ -253,6 +256,14 @@ public class ControladorTemp {
             String palabraError = palabra.substring(0,palabra.length()-1);
             palabraInput.setText(palabraError);
         }
+        else{
+            palabraInput.setPromptText("Ingrese Palabras");
+        }
+    }
+
+    @FXML
+    void clickRefresh(ActionEvent event) {
+        cargarLetras();
     }
 
 }

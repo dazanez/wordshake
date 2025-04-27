@@ -56,6 +56,66 @@
          </cursor>
       </TextField>
       <Button fx:id="iniciopartida" layoutX="195.0" layoutY="324.0" mnemonicParsing="false" onAction="#click" prefHeight="57.0" prefWidth="111.0" styleClass="boton-neon" stylesheets="@estilos.css" text="Start" />
+      <Button fx:id="bttAyuda" layoutX="404.0" layoutY="424.0" mnemonicParsing="false" onAction="#clickAyuda" onMouseEntered="#muestraAyuda" onMouseExited="#quitaAyuda" prefHeight="46.0" prefWidth="54.0" styleClass="bttH" stylesheets="@estilos.css" text="?" />
+      <Label fx:id="ayuda" alignment="CENTER" contentDisplay="CENTER" layoutX="376.0" layoutY="393.0" prefHeight="34.0" prefWidth="118.0" style="-fx-effect: dropshadow(gaussian, white, 4, 0, 2, 1);" text="AYUDA?" textAlignment="RIGHT" textOverrun="CENTER_WORD_ELLIPSIS" visible="false">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="DISAPPEAR" />
+         </cursor>
+         <textFill>
+            <LinearGradient cycleMethod="REFLECT" endX="0.4502369668246446" endY="0.6161137440758293">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.10413718968629837" green="1.0" blue="0.05999999865889549" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.5746791079154886">
+                     <color>
+                        <Color red="0.05999999865889549" green="1.0" blue="0.8671345710754395" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.07039999961853027" green="0.8799999952316284" blue="0.297457754611969" opacity="0.9200000166893005" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <Button fx:id="bttMejores" layoutX="53.0" layoutY="425.0" mnemonicParsing="false" onAction="#clickMejores" onMouseEntered="#mostrarMejores" onMouseExited="#ocultarMejores" prefHeight="46.0" prefWidth="54.0" styleClass="bttM" stylesheets="@estilos.css" text="🏆" />
+      <Label fx:id="mejores" alignment="CENTER" contentDisplay="CENTER" layoutX="19.0" layoutY="393.0" prefHeight="34.0" prefWidth="118.0" style="-fx-effect: dropshadow(gaussian, white, 4, 0, 2, 1);" text="MEJORES" textAlignment="RIGHT" textOverrun="CENTER_WORD_ELLIPSIS" visible="false">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="DISAPPEAR" />
+         </cursor>
+         <textFill>
+            <LinearGradient cycleMethod="REFLECT" endX="0.4502369668246446" endY="0.6161137440758293">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.9094754457473755" green="1.0" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.5746791079154886">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.9666666388511658" green="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
    </children>
    <styleClass>
       <String fx:value="anchor-pane" />

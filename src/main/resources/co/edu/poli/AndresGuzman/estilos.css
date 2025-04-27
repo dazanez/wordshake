@@ -48,3 +48,52 @@
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
 }
+
+
+.bttH {
+    -fx-background-color: linear-gradient(to bottom, #00ffea, #009688);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 100%;
+    -fx-padding: 10px 20px;
+    -fx-effect: dropshadow(gaussian, #00ffff80, 5, 0.3, 0, 5);
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+.bttH:hover {
+    -fx-background-color: linear-gradient(to bottom, #33ffee, #00ccaa);
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.bttH:pressed {
+    -fx-background-color: #009688;
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+}
+
+.bttM {
+    -fx-background-color: linear-gradient(to bottom, #ffeb3b, #fbc02d);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 100%;
+    -fx-padding: 10px 20px;
+    -fx-effect: dropshadow(gaussian, #ffeb3b80, 5, 0.3, 0, 5);
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+.bttM:hover {
+    -fx-background-color: linear-gradient(to bottom, #fff176, #fdd835);
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.bttM:pressed {
+    -fx-background-color: #fbc02d;
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+}

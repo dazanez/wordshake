@@ -4,6 +4,8 @@
 package co.edu.poli.AndresGuzman.controlador;
 
 import java.io.IOException;
+import java.net.URI;
+import java.awt.Desktop;
 
 import javax.swing.JOptionPane;
 
@@ -13,13 +15,17 @@ import co.edu.poli.AndresGuzman.vista.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 public class ControladorUser {
     public static Player jugador = new Player("default");
     private DaoPlayer jugadorDao = new DaoPlayer();
     @FXML
-    private Button iniciopartida;
+    private Label ayuda, mejores;
+    @FXML
+    private Button iniciopartida,  bttAyuda, bttMejores;
 
     @FXML
     private TextField user_name;
@@ -46,6 +52,44 @@ public class ControladorUser {
             App.setRoot("partidaConTemp", "Partida de: " + user_name.getText());
             user_name.clear();
         }
+    }
+
+    private void accederLink(String url){
+        try {
+            Desktop.getDesktop().browse(new URI(url));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void clickAyuda(ActionEvent event) {
+        accederLink("https://drive.google.com/file/d/1jbAHtIF-jdMmj1zvYeUpSghwDB2dIBg_/view?usp=sharing");
+    }
+
+    @FXML
+    void muestraAyuda(MouseEvent event) {
+        ayuda.setVisible(true);
+    }
+
+    @FXML
+    void quitaAyuda(MouseEvent event) {
+        ayuda.setVisible(false);
+    }
+
+    @FXML
+    void mostrarMejores(MouseEvent event) {
+        mejores.setVisible(true);
+    }
+
+    @FXML
+    void ocultarMejores(MouseEvent event) {
+        mejores.setVisible(false);
+    }
+
+    @FXML
+    void clickMejores(ActionEvent event) {
+        System.out.println("Tabla De Mejores");
     }
 
     public static Player getJugador(){
