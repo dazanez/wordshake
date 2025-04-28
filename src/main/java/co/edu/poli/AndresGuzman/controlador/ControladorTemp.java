@@ -32,7 +32,7 @@ import javafx.util.Duration;
 
 public class ControladorTemp {
     private Timeline tiempo = new Timeline();
-    private static final int TIEMPO_PARTIDA = 180;
+    private static final int TIEMPO_PARTIDA = 130;
     private int tiempoRestante;
     private DaoWords palabras = new DaoWords();
     private int puntajeT = 0;
@@ -205,7 +205,7 @@ public class ControladorTemp {
 
 
     public void guardarPuntaje() {
-        Game game = new Game(ControladorUser.jugador.getId(), puntajeT);
+        Game game = new Game(ControladorUser.getJugador().getId(), puntajeT);
         new DaoGame().insertar(game);
     }
 
@@ -264,6 +264,7 @@ public class ControladorTemp {
     @FXML
     void clickRefresh(ActionEvent event) {
         cargarLetras();
+        palabraInput.clear();
     }
 
 }

@@ -1,60 +1,81 @@
-/**
- * The class ControladorUser is a Java controller class for a user interface that includes a button for starting a game and a text field for entering a user name.
- */
 package co.edu.poli.AndresGuzman.controlador;
 
 import java.io.IOException;
 import java.net.URI;
 import java.awt.Desktop;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import co.edu.poli.AndresGuzman.modelo.Player;
+import co.edu.poli.AndresGuzman.modelo.ScoreView;
 import co.edu.poli.AndresGuzman.servicio.DaoPlayer;
+import co.edu.poli.AndresGuzman.servicio.ScoreDao;
 import co.edu.poli.AndresGuzman.vista.App;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
-public class ControladorUser {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class ControladorUser implements Initializable {
     public static Player jugador = new Player("default");
     private DaoPlayer jugadorDao = new DaoPlayer();
+    private ScoreDao mejorPuntDao = new ScoreDao(); 
+    private boolean mostrarMejores = false;
+    @FXML
+    private TableView<ScoreView> mejorPunt;
+    @FXML
+    private TableColumn<ScoreView, String> colUsuario;
+    @FXML
+    private TableColumn<ScoreView, Integer> colPuntaje;
+    @FXML
+    private TableColumn<ScoreView, LocalDateTime> colFecha;
+
     @FXML
     private Label ayuda, mejores;
     @FXML
-    private Button iniciopartida,  bttAyuda, bttMejores;
+    private Button iniciopartida, bttAyuda, bttMejores;
 
     @FXML
     private TextField user_name;
 
-    /**
-     * The click function is an event handler in JavaFXML that takes an ActionEvent as a parameter.
-     *
-     * @param event The `event` parameter in the `click` method is of type `ActionEvent`. It represents the event that occurred, such as a button click or menu item selection, that triggered the method to be called. You can use this parameter to access information about the event or perform actions based on the
-     * @throws IOException
-     */
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        colUsuario.setCellValueFactory(new PropertyValueFactory<>("username"));
+        colPuntaje.setCellValueFactory(new PropertyValueFactory<>("score"));
+        colFecha.setCellValueFactory(new PropertyValueFactory<>("playedAt"));
+    }
+
     @FXML
     void click(ActionEvent event) throws IOException {
-        if(user_name.getText().isEmpty()){
+        if (user_name.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese Un Usuario", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-        else{
+        } else {
             jugador = jugadorDao.buscar(user_name.getText());
-            if(jugador != null) {
+            if (jugador != null) {
                 jugadorDao.actualizar(jugador);
-            }
-            else{
+            } else {
                 jugadorDao.insertar(new Player(user_name.getText()));
+                jugador = jugadorDao.buscar(user_name.getText());
             }
             App.setRoot("partidaConTemp", "Partida de: " + user_name.getText());
             user_name.clear();
         }
     }
 
-    private void accederLink(String url){
+    private void accederLink(String url) {
         try {
             Desktop.getDesktop().browse(new URI(url));
         } catch (Exception e) {
@@ -87,12 +108,19 @@ public class ControladorUser {
         mejores.setVisible(false);
     }
 
+    /**
+     * Al hacer clic en "Mejores Puntajes", carga datos y muestra la tabla.
+     */
     @FXML
     void clickMejores(ActionEvent event) {
-        System.out.println("Tabla De Mejores");
+        mostrarMejores = !mostrarMejores;
+        List<ScoreView> lista = mejorPuntDao.listar();
+        ObservableList<ScoreView> data = FXCollections.observableArrayList(lista);
+        mejorPunt.setItems(data);
+        mejorPunt.setVisible(mostrarMejores);
     }
 
-    public static Player getJugador(){
+    public static Player getJugador() {
         return jugador;
     }
 }
