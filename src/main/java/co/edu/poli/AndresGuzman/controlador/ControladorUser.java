@@ -1,11 +1,13 @@
 package co.edu.poli.AndresGuzman.controlador;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.awt.Desktop;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.print.attribute.standard.Media;
 import javax.swing.JOptionPane;
 
 import co.edu.poli.AndresGuzman.modelo.Player;
@@ -13,6 +15,8 @@ import co.edu.poli.AndresGuzman.modelo.ScoreView;
 import co.edu.poli.AndresGuzman.servicio.DaoPlayer;
 import co.edu.poli.AndresGuzman.servicio.ScoreDao;
 import co.edu.poli.AndresGuzman.vista.App;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,6 +29,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -51,11 +60,34 @@ public class ControladorUser implements Initializable {
     @FXML
     private TextField user_name;
 
+    @FXML
+    private AnchorPane rootPane;  
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         colUsuario.setCellValueFactory(new PropertyValueFactory<>("username"));
         colPuntaje.setCellValueFactory(new PropertyValueFactory<>("score"));
         colFecha.setCellValueFactory(new PropertyValueFactory<>("playedAt"));
+
+        String path = getClass().getResource("/co/edu/poli/AndresGuzman/camcion.mp3").toString();
+        javafx.scene.media.Media media = new javafx.scene.media.Media(path);
+        javafx.scene.media.MediaPlayer mediaPlayer = new javafx.scene.media.MediaPlayer(media);
+        mediaPlayer.setStartTime(Duration.seconds(2));
+        mediaPlayer.setCycleCount(javafx.scene.media.MediaPlayer.INDEFINITE); 
+        mediaPlayer.setVolume(1);
+        mediaPlayer.play();
+
+        // Animación sincronizada con la música
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(0), e -> {
+                    double currentTime = mediaPlayer.getCurrentTime().toSeconds();
+                    double hue = (currentTime % 60) / 15;
+                    rootPane.setStyle("-fx-background-color: hsb(" + (hue * 360) + ", 100%, 100%);");
+                }),
+                new KeyFrame(Duration.seconds(0.1))
+        );
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
     }
 
     @FXML
@@ -108,9 +140,6 @@ public class ControladorUser implements Initializable {
         mejores.setVisible(false);
     }
 
-    /**
-     * Al hacer clic en "Mejores Puntajes", carga datos y muestra la tabla.
-     */
     @FXML
     void clickMejores(ActionEvent event) {
         mostrarMejores = !mostrarMejores;

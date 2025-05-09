@@ -1,6 +1,8 @@
 package co.edu.poli.AndresGuzman.controlador;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.print.DocFlavor.STRING;
@@ -37,6 +39,8 @@ public class ControladorTemp {
     private DaoWords palabras = new DaoWords();
     private int puntajeT = 0;
     private Alert.AlertType tipoAlerta;
+    private List<Label> desactivados = new ArrayList<>();
+
 
     @FXML
     private ImageView iconoMensaje;
@@ -156,6 +160,7 @@ public class ControladorTemp {
             mensaje = "Palabra Ya Usada";
             tipoAlerta = Alert.AlertType.ERROR;
             esExito = false;
+            reactivarLetras(palabraInput.getText());
         }
         else if (!palabra.getWord().equals("No Encontrada")) {
             mensaje = "¡Palabra encontrada!";
@@ -167,6 +172,7 @@ public class ControladorTemp {
             mensaje = "Palabra no encontrada";
             tipoAlerta = Alert.AlertType.ERROR;
             esExito = false;
+            reactivarLetras(palabraInput.getText());
         }
         mostrarMensajeAnimado(mensaje, esExito);
         barraPuntaje.setText(String.valueOf(puntajeT));
@@ -210,6 +216,7 @@ public class ControladorTemp {
     }
 
     public void cargarLetras() {
+        boardGrid.getChildren().clear();
         List<Character> letras = Words.generarLetras(25);
         int index = 0; // Para llevar un seguimiento del índice de letras en el ArrayList
         int totalRows = boardGrid.getRowCount();
@@ -231,17 +238,13 @@ public class ControladorTemp {
     // Método para manejar el clic en una celda
     @FXML
     public void handleCellClick(MouseEvent event) {
-        // Obtener el Label que fue clickeado
         Label clickedLabel = (Label) event.getSource();
-
-
-        // Obtener el texto (letra) de la celda
+        clickedLabel.setStyle("-fx-background-color: gray; -fx-text-fill: white;");
+        desactivados.add(clickedLabel);
+        clickedLabel.setOpacity(0.5);
+        clickedLabel.setOnMouseClicked(null);
         String letra = clickedLabel.getText();
         palabraInput.setText(palabraInput.getText() + letra);
-
-
-        // Aquí puedes hacer lo que necesites con la letra seleccionada
-//        System.out.println("¡Se ha hecho clic en la letra: " + letra + "!");
     }
 
     public static void setJugador(String username) {
@@ -255,11 +258,30 @@ public class ControladorTemp {
             String palabra = palabraInput.getText();
             String palabraError = palabra.substring(0,palabra.length()-1);
             palabraInput.setText(palabraError);
+            String letraBorrada = palabra.substring(palabra.length()-1);
+            reactivarLetras(letraBorrada);
         }
         else{
             palabraInput.setPromptText("Ingrese Palabras");
         }
     }
+
+    public void reactivarLetras(String palabra) {
+        for (int i = palabra.length() - 1; i >= 0; i--) {
+            char letra = palabra.charAt(i);
+            Iterator<Label> iterator = desactivados.iterator();
+            while (iterator.hasNext()) {
+                Label label = iterator.next();
+                if (label.getText().equalsIgnoreCase(String.valueOf(letra))) {
+                    label.setStyle("-fx-background-color: linear-gradient(to bottom, #00ffea, #009688); -fx-text-fill: white;");
+                    label.setOpacity(1.0);
+                    label.setOnMouseClicked(this::handleCellClick);
+                    iterator.remove(); // Elimina de la lista para evitar duplicados
+                    break; // Reactivamos solo un Label por letra
+                }
+            }
+        }
+}
 
     @FXML
     void clickRefresh(ActionEvent event) {

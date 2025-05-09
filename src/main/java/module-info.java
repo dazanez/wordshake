@@ -4,6 +4,7 @@ module co.edu.poli.AndresGuzman {
 	requires javafx.graphics;
     requires java.sql;
     requires java.desktop;
+    requires javafx.media;
 
     opens co.edu.poli.AndresGuzman.vista to javafx.fxml;
     opens co.edu.poli.AndresGuzman.controlador to javafx.fxml;
