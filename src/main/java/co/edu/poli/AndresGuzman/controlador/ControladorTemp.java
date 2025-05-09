@@ -145,6 +145,7 @@ public class ControladorTemp {
             puntajeT = 0;
             barraPuntaje.setText(String.valueOf(puntajeT));
             palabras.eliminar(1);
+            palabraInput.clear();
         }
         iniciarTemporizador();
     }
