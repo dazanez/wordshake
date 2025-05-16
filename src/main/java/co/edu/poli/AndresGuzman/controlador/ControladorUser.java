@@ -22,11 +22,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -53,7 +55,7 @@ public class ControladorUser implements Initializable {
     private TableColumn<ScoreView, LocalDateTime> colFecha;
 
     @FXML
-    private Label ayuda, mejores;
+    private Label ayuda, mejores, tituloW;
     @FXML
     private Button iniciopartida, bttAyuda, bttMejores;
 
@@ -82,7 +84,7 @@ public class ControladorUser implements Initializable {
                 new KeyFrame(Duration.seconds(0), e -> {
                     double currentTime = mediaPlayer.getCurrentTime().toSeconds();
                     double hue = (currentTime % 60) / 15;
-                    rootPane.setStyle("-fx-background-color: hsb(" + (hue * 360) + ", 100%, 100%);");
+                    tituloW.setStyle("-fx-text-fill: hsb(" + (hue * 360) + ", 100%, 100%);");
                 }),
                 new KeyFrame(Duration.seconds(0.1))
         );
@@ -93,7 +95,10 @@ public class ControladorUser implements Initializable {
     @FXML
     void click(ActionEvent event) throws IOException {
         if (user_name.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Ingrese Un Usuario", "ERROR", JOptionPane.ERROR_MESSAGE);
+            Alert alerta = new Alert(AlertType.ERROR);
+            alerta.setHeaderText(null);
+            alerta.setContentText("Ingresa Un Usuario!!");
+            alerta.show();
         } else {
             jugador = jugadorDao.buscar(user_name.getText());
             if (jugador != null) {

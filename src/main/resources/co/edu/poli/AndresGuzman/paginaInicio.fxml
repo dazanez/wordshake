@@ -16,7 +16,7 @@
 
 <AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="502.0" prefWidth="500.0" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.AndresGuzman.controlador.ControladorUser">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="84.0" layoutY="82.0" prefHeight="135.0" prefWidth="338.0" style="-fx-effect: dropshadow(gaussian, white, 4, 0, 2, 1);" text="WordShake" textAlignment="RIGHT" textOverrun="CENTER_WORD_ELLIPSIS">
+      <Label fx:id="tituloW" alignment="CENTER" contentDisplay="CENTER" layoutX="84.0" layoutY="82.0" prefHeight="135.0" prefWidth="338.0" style="-fx-effect: dropshadow(gaussian, white, 4, 0, 2, 1);" text="WordShake" textAlignment="RIGHT" textOverrun="CENTER_WORD_ELLIPSIS">
          <font>
             <Font name="System Bold" size="50.0" />
          </font>

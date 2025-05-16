@@ -75,22 +75,22 @@ public class Words {
                 "abecedario",    // A, B, C, D, E
                 "fácil",         // F, A, C, I, L
                 "gente",         // G, E, N, T
-                "horizonte",     // H, O, R, I, Z
-                "jabón",         // J, A, B, O, N
-                "kilómetro",     // K, I, L, O, M, E, T
+                "horizonte",     // H, O, R, I, Z    // K, I, L, O, M, E, T
                 "luna",          // L, U, N, A
                 "mujer",         // M, U, J, E, R
                 "naranja",       // N, A, R, J
                 "océano",        // O, C, E, A, N
                 "paz",           // P, A, Z
-                "químico",       // Q, U, I, M, C, O
-                "río",           // R, I, O
+                "quimico",       // Q, U, I, M, C, O
+                "rio",           // R, I, O
                 "salvaje",       // S, A, L, V, J, E
                 "tesoro",        // T, E, S, O, R
                 "viento",        // V, I, E, N, T, O
-                "xenón",         // X, E, N, O
+                "xenon",         // X, E, N, O
                 "yogur",         // Y, O, G, U, R
-                "zorro"          // Z, O, R
+                "zorro",
+                "amigo",
+                "bestia"          // Z, O, R
         ));
 
         List<Character> letras = new ArrayList<>();

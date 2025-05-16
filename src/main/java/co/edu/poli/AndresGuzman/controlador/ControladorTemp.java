@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.print.DocFlavor.STRING;
 
 import co.edu.poli.AndresGuzman.modelo.Game;
 import co.edu.poli.AndresGuzman.modelo.Words;
@@ -20,26 +19,31 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class ControladorTemp {
     private Timeline tiempo = new Timeline();
-    private static final int TIEMPO_PARTIDA = 130;
+    private static final int TIEMPO_PARTIDA = 180;
     private int tiempoRestante;
     private DaoWords palabras = new DaoWords();
     private int puntajeT = 0;
     private Alert.AlertType tipoAlerta;
     private List<Label> desactivados = new ArrayList<>();
+    private int cantidadLetras = 0;
 
 
     @FXML
@@ -50,10 +54,10 @@ public class ControladorTemp {
     @FXML
     private Label temporizador, mensajeExito;
     @FXML
-    private Label barraPuntaje;
+    private Label barraPuntaje, nombreJugador;
 
     @FXML
-    private Button bttVerificar, bttIniciar,bttBorrar, bttRefrescar, bttRei;
+    private Button bttVerificar, bttIniciar,bttBorrar, bttRefrescar, bttRei,bttVolver,  bttFacil,  bttHard,  bttMedium;
 
     @FXML
     private TextField palabraInput;
@@ -65,14 +69,44 @@ public class ControladorTemp {
     private Label temporizador1;
 
 
-    private void iniciarTemporizador() {
+    @FXML
+    private void initialize(){
+        nombreJugador.setText(nombreJugador.getText() + " " + ControladorUser.getJugador().getUsername());
+    }
+    @FXML
+    void clickFacil(ActionEvent event) {
+        cantidadLetras = 40;
+        bttFacil.setVisible(false);
+        bttMedium.setVisible(false);
+        bttHard.setVisible(false);
+        iniciar(cantidadLetras);
+    }
+
+    @FXML
+    void clickHard(ActionEvent event) {
+        cantidadLetras = 65;
+        bttFacil.setVisible(false);
+        bttMedium.setVisible(false);
+        bttHard.setVisible(false);
+        iniciar(cantidadLetras);
+    }
+    @FXML
+    void clickMedium(ActionEvent event) {
+        cantidadLetras = 50;
+        bttFacil.setVisible(false);
+        bttMedium.setVisible(false);
+        bttHard.setVisible(false);
+        iniciar(cantidadLetras);
+    }
+
+    private void iniciarTemporizador(int letras) {
         if (tiempo != null){
             tiempo.stop();
             tiempo.getKeyFrames().clear();
         }
         tiempoRestante = TIEMPO_PARTIDA;
         actualizarLabel();
-        cargarLetras();
+        cargarLetras(letras);
         KeyFrame accion = new KeyFrame(Duration.seconds(1), e -> {
             tiempoRestante--;
             actualizarLabel();
@@ -82,7 +116,7 @@ public class ControladorTemp {
                 guardarPuntaje();
                 tipoAlerta = Alert.AlertType.INFORMATION;
                 palabras.eliminar(1);
-                Platform.runLater(() -> mostrarAlerta("Se Acabo el Tiempo " + ControladorUser.getJugador().getUsername(), tipoAlerta));
+                Platform.runLater(() -> mostrarAlerta("Se Acabo el Tiempo " + ControladorUser.getJugador().getUsername(), tipoAlerta, "timeout.png"));
                 try {
                     App.setRoot("paginaInicio", "Inicio");
                 } catch (IOException e1) {
@@ -95,17 +129,17 @@ public class ControladorTemp {
         tiempo.play();
     }
 
-    private void mostrarAlerta(String mensaje, Alert.AlertType tipo) {
+    private void mostrarAlerta(String mensaje, Alert.AlertType tipo,String imagene) {
         tiempo.pause();
         Alert alerta = new Alert(tipo);
-        alerta.setTitle("Resultadoo");
+        alerta.setTitle("Resultado");
         alerta.getDialogPane().getStylesheets().add(getClass().getResource("/co/edu/poli/AndresGuzman/estilosTiempo.css").toExternalForm());
         alerta.getDialogPane().setPrefWidth(450);
         alerta.getDialogPane().setPrefHeight(220);
         alerta.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alerta.setHeaderText(null);
         alerta.setContentText(mensaje + "\n Tu Puntaje fue: " + puntajeT + "Pts.");
-        Image imagen = new Image(getClass().getResourceAsStream("/co/edu/poli/AndresGuzman/timeout.png"));
+        Image imagen = new Image(getClass().getResourceAsStream("/co/edu/poli/AndresGuzman/"+imagene));
         ImageView icono = new ImageView(imagen);
         icono.setFitHeight(150);
         icono.setFitWidth(100);
@@ -126,7 +160,12 @@ public class ControladorTemp {
 
     @FXML
     void clickIniciar(ActionEvent event) {
-        iniciarTemporizador();
+        bttFacil.setDisable(false);
+        bttHard.setDisable(false);
+        bttMedium.setDisable(false);
+    }
+    private void iniciar(int letras) {
+        iniciarTemporizador(letras);
         bttVerificar.setDisable(false);
         barraPuntaje.setText(String.valueOf(puntajeT));
         palabraInput.setDisable(false);
@@ -135,6 +174,8 @@ public class ControladorTemp {
         bttRefrescar.setDisable(false);
         bttBorrar.setDisable(false);
         bttRei.setDisable(false);
+        bttIniciar.setVisible(false);
+        bttVolver.setVisible(true);
     }
 
 
@@ -146,8 +187,9 @@ public class ControladorTemp {
             barraPuntaje.setText(String.valueOf(puntajeT));
             palabras.eliminar(1);
             palabraInput.clear();
+            desactivados.clear();
         }
-        iniciarTemporizador();
+        iniciarTemporizador(cantidadLetras);
     }
 
     @FXML
@@ -216,25 +258,45 @@ public class ControladorTemp {
         new DaoGame().insertar(game);
     }
 
-    public void cargarLetras() {
-        boardGrid.getChildren().clear();
-        List<Character> letras = Words.generarLetras(25);
-        int index = 0; // Para llevar un seguimiento del índice de letras en el ArrayList
-        int totalRows = boardGrid.getRowCount();
-        int totalColumns = boardGrid.getColumnCount();
+    public void cargarLetras(int totalLetras) {
+    boardGrid.getChildren().clear();
+    boardGrid.getRowConstraints().clear();
+    boardGrid.getColumnConstraints().clear();
+    
+    // calcula el tamaño de la cuadrícula (asumimos siempre cuadrados perfectos)
+    int gridSize = (int) Math.sqrt(totalLetras);
+    double cellSize = 60;
 
-        // Recorremos las filas (0 a 3) y las columnas (0 a 3) para agregar las celdas
-        for (int row = 0; row < totalRows; row++) {
-            for (int col = 0; col < totalColumns; col++) {
-                // Crear un nuevo Label y asignar la letra de la lista
-                Label label = new Label(letras.get(index).toString());
-                label.getStyleClass().add("label-letter");
-                label.setOnMouseClicked(this::handleCellClick);  // Asociamos el evento de clic
-                boardGrid.add(label, col, row);  // Añadimos el label en la posición correspondiente
-                index++;  // Avanzamos al siguiente índice de la lista
-            }
+    // 3) forzamos el tamaño total del GridPane
+    boardGrid.setPrefWidth(gridSize * cellSize);
+    boardGrid.setPrefHeight(gridSize * cellSize);
+
+    // crea constraints para que cada celda ocupe un porcentaje igual
+    for (int i = 0; i < gridSize; i++) {
+        ColumnConstraints cc = new ColumnConstraints();
+        cc.setPercentWidth(100.0 / gridSize);
+        boardGrid.getColumnConstraints().add(cc);
+
+        RowConstraints rc = new RowConstraints();
+        rc.setPercentHeight(100.0 / gridSize);
+        boardGrid.getRowConstraints().add(rc);
+    }
+
+    // genera las letras y llena el GridPane
+    List<Character> letras = Words.generarLetras(totalLetras);
+    int index = 0;
+    for (int row = 0; row < gridSize; row++) {
+        for (int col = 0; col < gridSize; col++) {
+            Label label = new Label(letras.get(index++).toString());
+            label.setAlignment(Pos.CENTER);
+            label.getStyleClass().add("label-letter");
+            label.setOnMouseClicked(this::handleCellClick);
+            label.setMaxSize(45, 45);
+            boardGrid.add(label, col, row);
         }
     }
+}
+
 
     // Método para manejar el clic en una celda
     @FXML
@@ -274,7 +336,7 @@ public class ControladorTemp {
             while (iterator.hasNext()) {
                 Label label = iterator.next();
                 if (label.getText().equalsIgnoreCase(String.valueOf(letra))) {
-                    label.setStyle("-fx-background-color: linear-gradient(to bottom, #00ffea, #009688); -fx-text-fill: white;");
+                    label.setStyle("-fx-background-color: #6a00f4; -fx-text-fill: white;");
                     label.setOpacity(1.0);
                     label.setOnMouseClicked(this::handleCellClick);
                     iterator.remove(); // Elimina de la lista para evitar duplicados
@@ -286,8 +348,16 @@ public class ControladorTemp {
 
     @FXML
     void clickRefresh(ActionEvent event) {
-        cargarLetras();
+        cargarLetras(cantidadLetras);
         palabraInput.clear();
+        desactivados.clear();
+    }
+
+
+    @FXML
+    void clickVolver(ActionEvent event) throws IOException {
+        mostrarAlerta("Volviendo al Inicio...", AlertType.INFORMATION, "volviendo.png");
+        App.setRoot("paginaInicio", "WordShake");
     }
 
 }
