@@ -45,6 +45,7 @@ public class ControladorUser implements Initializable {
     private DaoPlayer jugadorDao = new DaoPlayer();
     private ScoreDao mejorPuntDao = new ScoreDao(); 
     private boolean mostrarMejores = false;
+    private boolean reproducir = true;
     @FXML
     private TableView<ScoreView> mejorPunt;
     @FXML
@@ -57,7 +58,7 @@ public class ControladorUser implements Initializable {
     @FXML
     private Label ayuda, mejores, tituloW;
     @FXML
-    private Button iniciopartida, bttAyuda, bttMejores;
+    private Button iniciopartida, bttAyuda, bttMejores, bttReproducir;
 
     @FXML
     private TextField user_name;
@@ -70,21 +71,13 @@ public class ControladorUser implements Initializable {
         colUsuario.setCellValueFactory(new PropertyValueFactory<>("username"));
         colPuntaje.setCellValueFactory(new PropertyValueFactory<>("score"));
         colFecha.setCellValueFactory(new PropertyValueFactory<>("playedAt"));
-
-        String path = getClass().getResource("/co/edu/poli/AndresGuzman/camcion.mp3").toString();
-        javafx.scene.media.Media media = new javafx.scene.media.Media(path);
-        javafx.scene.media.MediaPlayer mediaPlayer = new javafx.scene.media.MediaPlayer(media);
-        mediaPlayer.setStartTime(Duration.seconds(2));
-        mediaPlayer.setCycleCount(javafx.scene.media.MediaPlayer.INDEFINITE); 
-        mediaPlayer.setVolume(1);
-        mediaPlayer.play();
-
+        App.mediaPlayer.play();
         // Animación sincronizada con la música
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(0), e -> {
-                    double currentTime = mediaPlayer.getCurrentTime().toSeconds();
-                    double hue = (currentTime % 60) / 15;
-                    tituloW.setStyle("-fx-text-fill: hsb(" + (hue * 360) + ", 100%, 100%);");
+                    double currentTime = App.mediaPlayer.getCurrentTime().toSeconds();
+                    double hue = (currentTime % 60) / 10;
+                    tituloW.setStyle("-fx-text-fill: hsb(" + (hue * 360) + ", 100%, 100%); -fx-effect: dropshadow(gaussian,  #00f4e4,10, 0.5, 0, 2);");
                 }),
                 new KeyFrame(Duration.seconds(0.1))
         );
@@ -152,6 +145,19 @@ public class ControladorUser implements Initializable {
         ObservableList<ScoreView> data = FXCollections.observableArrayList(lista);
         mejorPunt.setItems(data);
         mejorPunt.setVisible(mostrarMejores);
+    }
+
+    @FXML
+    void clickReproducir(ActionEvent event) {
+        reproducir = !reproducir;
+        if(reproducir==true){
+            App.mediaPlayer.play();
+            bttReproducir.setText("⏸");
+        }
+        else{
+            App.mediaPlayer.pause();
+            bttReproducir.setText("▶");
+        }
     }
 
     public static Player getJugador() {

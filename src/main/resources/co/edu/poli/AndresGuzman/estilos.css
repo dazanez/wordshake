@@ -1,114 +1,99 @@
 .anchor-pane {
-    -fx-background-color: linear-gradient(to bottom, #12123a, #0000ff);
-    -fx-border-color: #ff00ff;
+    -fx-background-color: black;
+    -fx-border-color:#6a00f4;
+    -fx-background-radius: 12px;
     -fx-border-width: 4px;
     -fx-border-radius: 12px;
-    -fx-effect: dropshadow(gaussian, #ff00ff, 25, 0.8, 0, 0);
+    -fx-effect: dropshadow(gaussian,  #00f4e4, 10, 0.5, 0, 2);
     -fx-animation: fade-in 2s infinite alternate;
 }
 
 .boton-neon {
-    -fx-background-color: linear-gradient(to right, #ff0080, #8000ff);
-    -fx-border-color: white;
-    -fx-border-width: 2px;
-    -fx-border-radius: 10px;
+    -fx-background-color: linear-gradient(to bottom, #6a00f4,#6a00f4 );
     -fx-text-fill: white;
-    -fx-font-size: 20px;
     -fx-font-weight: bold;
-    -fx-padding: 10px 20px;
+    -fx-font-size: 20px;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, #ff00ff, 15, 0.7, 0, 0);
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-padding: 8px 12px;
+    -fx-effect: dropshadow(gaussian,   #00f4e4, 5, 0.3, 0, 5);
     -fx-transition: all 0.3s ease-in-out;
 }
 
 .boton-neon:hover {
-    -fx-background-color: linear-gradient(to right, #ff00ff, #ff4d4d);
-    -fx-text-fill: white;
-    -fx-border-color: #ff66b2;
-    -fx-effect: dropshadow(gaussian, #ff66b2, 15, 0.7, 0, 0);
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
+    -fx-background-color: linear-gradient(to bottom, #6a00f4, #580362);
+    -fx-effect: dropshadow(gaussian,   #6e00f4, 5, 0.3, 0, 5);
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
     -fx-transition: all 0.3s ease-in-out;
+}
+
+.boton-neon:pressed {
+    -fx-background-color:  #3e0588;
+    -fx-effect: dropshadow(gaussian,   #00f4e4, 5, 0.3, 0, 5);
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
 }
 
 
 .texto-input {
-    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-background-color: rgba(0, 0, 0, 0.15);
     -fx-border-color: #ffff00;
     -fx-border-radius: 8px;
-    -fx-text-fill: rgb(221, 24, 202);
+    -fx-text-fill: white;
     -fx-font-size: 18px;
+    -font-weight: bold;
     -fx-padding: 8px;
     -fx-transition: all 0.2s ease-in-out;
 }
 
 .texto-input:focused {
-    -fx-border-color: white;
-    -fx-effect: dropshadow(gaussian, white, 15, 0.7, 0, 0);
+    -fx-border-color:#00f4e4 ;
+    -fx-effect: dropshadow(gaussian, #6a00f4, 15, 0.7, 0, 0);
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
 }
 
-
-.bttH {
-    -fx-background-color: linear-gradient(to bottom, #00ffea, #009688);
+.bttM {
+    -fx-background-color: linear-gradient(to bottom, #6a00f4,#6a00f4 );
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
-    -fx-border-radius: 15px;
+    -fx-border-radius: 100%;
     -fx-background-radius: 100%;
-    -fx-padding: 10px 20px;
+    -fx-padding: 10px 15px;
     -fx-effect: dropshadow(gaussian, #00ffff80, 5, 0.3, 0, 5);
     -fx-transition: all 0.3s ease-in-out;
 }
 
-.bttH:hover {
-    -fx-background-color: linear-gradient(to bottom, #33ffee, #00ccaa);
-    -fx-scale-x: 1.1;
-    -fx-scale-y: 1.1;
-}
-
-.bttH:pressed {
-    -fx-background-color: #009688;
-    -fx-scale-x: 1;
-    -fx-scale-y: 1;
-}
-
-.bttM {
-    -fx-background-color: linear-gradient(to bottom, #ffeb3b, #fbc02d);
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-font-size: 14px;
-    -fx-border-radius: 15px;
-    -fx-background-radius: 100%;
-    -fx-padding: 10px 20px;
-    -fx-effect: dropshadow(gaussian, #ffeb3b80, 5, 0.3, 0, 5);
-    -fx-transition: all 0.3s ease-in-out;
-}
-
 .bttM:hover {
-    -fx-background-color: linear-gradient(to bottom, #fff176, #fdd835);
+    -fx-background-color: linear-gradient(to bottom, #6a00f4, #580362);
+    -fx-effect: dropshadow(gaussian,   #9600f4, 5, 0.3, 0, 5);
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
 }
 
 .bttM:pressed {
-    -fx-background-color: #fbc02d;
+    -fx-background-color: #009688;
     -fx-scale-x: 1;
     -fx-scale-y: 1;
 }
 
 
 .table-view {
-    -fx-background-color: linear-gradient(to bottom right, #662D91, #FF6CC9);
-    -fx-border-color: #F9F871;
+    -fx-background-color: black;
+    -fx-border-color:  #6a00f4;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
     -fx-border-width: 3;
     -fx-table-cell-border-color: transparent;
     -fx-padding: 5px;
+    -fx-effect: dropshadow(gaussian,   #00f4e4, 5, 0.3, 0, 5);
 }
     
 .table-view .column-header-background {
-    -fx-background-color: linear-gradient(to right, #FF6CC9, #662D91);
+    -fx-background-color: linear-gradient(to bottom, #6a00f4, #580362);
 }
     
 .table-view .column-header .label {
@@ -116,6 +101,7 @@
     -fx-font-family: "Arial Black";
     -fx-font-size: 14px;
     -fx-text-fill: #FFFFFF;
+    -fx-background-color:black;
     -fx-padding: 8 0 8 0;
 }
     
@@ -124,7 +110,7 @@
     -fx-font-family: "Comic Sans MS";
     -fx-font-style: italic;
     -fx-font-size: 13px;
-    -fx-text-fill: #FFF3B0;
+    -fx-text-fill: #00f4e4 ;
     -fx-padding: 6 4 6 4;
 }
     
@@ -137,12 +123,12 @@
 }
     
 .table-row-cell:hover {
-    -fx-background-color: rgba(249, 248, 113, 0.3);
+    -fx-background-color: rgba(18, 235, 217, 0.3);
 }
     
 .table-row-cell:selected {
     -fx-background-color: rgba(255, 255, 255, 0.3);
-    -fx-border-color: #F9F871;
+    -fx-border-color:  #6a00f4;
     -fx-border-width: 2;
 }
 

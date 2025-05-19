@@ -57,8 +57,8 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <Button fx:id="iniciopartida" layoutX="195.0" layoutY="324.0" mnemonicParsing="false" onAction="#click" prefHeight="57.0" prefWidth="111.0" styleClass="boton-neon" stylesheets="@estilos.css" text="Start" />
-      <Button fx:id="bttAyuda" layoutX="404.0" layoutY="424.0" mnemonicParsing="false" onAction="#clickAyuda" onMouseEntered="#muestraAyuda" onMouseExited="#quitaAyuda" prefHeight="46.0" prefWidth="54.0" styleClass="bttH" stylesheets="@estilos.css" text="?" />
+      <Button fx:id="iniciopartida" layoutX="195.0" layoutY="315.0" mnemonicParsing="false" onAction="#click" prefHeight="57.0" prefWidth="111.0" styleClass="boton-neon" stylesheets="@estilos.css" text="Start" />
+      <Button fx:id="bttAyuda" layoutX="404.0" layoutY="424.0" mnemonicParsing="false" onAction="#clickAyuda" onMouseEntered="#muestraAyuda" onMouseExited="#quitaAyuda" prefHeight="46.0" prefWidth="54.0" styleClass="bttM" stylesheets="@estilos.css" text="?" />
       <Label fx:id="ayuda" alignment="CENTER" contentDisplay="CENTER" layoutX="376.0" layoutY="393.0" prefHeight="34.0" prefWidth="118.0" style="-fx-effect: dropshadow(gaussian, white, 4, 0, 2, 1);" text="AYUDA?" textAlignment="RIGHT" textOverrun="CENTER_WORD_ELLIPSIS" visible="false">
          <font>
             <Font name="System Bold" size="21.0" />
@@ -118,13 +118,14 @@
             </LinearGradient>
          </textFill>
       </Label>
-      <TableView fx:id="mejorPunt" layoutX="82.0" layoutY="92.0" prefHeight="294.0" prefWidth="338.0" visible="false">
+      <TableView fx:id="mejorPunt" layoutX="70.0" layoutY="103.0" prefHeight="294.0" prefWidth="366.0" visible="false">
         <columns>
-          <TableColumn fx:id="colUsuario" prefWidth="75.0" text="Jugador" />
-          <TableColumn fx:id="colPuntaje" prefWidth="75.0" text="Puntaje" />
-            <TableColumn fx:id="colFecha" prefWidth="172.0" text="Fecha" />
+          <TableColumn fx:id="colUsuario" prefWidth="86.40001678466797" text="Jugador" />
+          <TableColumn fx:id="colPuntaje" prefWidth="88.0" text="Puntaje" />
+            <TableColumn fx:id="colFecha" prefWidth="180.79998779296875" text="Fecha" />
         </columns>
       </TableView>
+      <Button fx:id="bttReproducir" layoutX="223.0" layoutY="424.0" mnemonicParsing="false" onAction="#clickReproducir" prefHeight="46.0" prefWidth="54.0" styleClass="bttM" stylesheets="@estilos.css" text="▶" />
    </children>
    <styleClass>
       <String fx:value="anchor-pane" />

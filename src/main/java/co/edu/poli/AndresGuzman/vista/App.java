@@ -11,10 +11,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class App extends Application {
 
     private static Scene scene;
+     private static final String path =
+        Main.class
+            .getResource("/co/edu/poli/AndresGuzman/camcion.mp3")
+            .toExternalForm().toString();
+    static javafx.scene.media.Media media = new javafx.scene.media.Media(path);
+    public static javafx.scene.media.MediaPlayer mediaPlayer = new javafx.scene.media.MediaPlayer(media);
 
    /**
     * The start method loads a FXML file to create the initial scene for a JavaFX application titled "WordShake".
@@ -23,9 +30,13 @@ public class App extends Application {
     */
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("parginaInicio"));
+        scene = new Scene(loadFXML("paginaInicio"));
         stage.setTitle("WordShake");
+        mediaPlayer.setStartTime(Duration.seconds(2));
+        mediaPlayer.setCycleCount(javafx.scene.media.MediaPlayer.INDEFINITE); 
+        mediaPlayer.setVolume(1);
         stage.setScene(scene);
+        mediaPlayer.play();
         stage.show();
     }
     private static Parent loadFXML(String fxml) throws IOException {

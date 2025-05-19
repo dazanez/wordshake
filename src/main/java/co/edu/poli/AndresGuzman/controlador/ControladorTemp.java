@@ -37,7 +37,7 @@ import javafx.util.Duration;
 
 public class ControladorTemp {
     private Timeline tiempo = new Timeline();
-    private static final int TIEMPO_PARTIDA = 180;
+    private int TIEMPO_PARTIDA;
     private int tiempoRestante;
     private DaoWords palabras = new DaoWords();
     private int puntajeT = 0;
@@ -79,6 +79,7 @@ public class ControladorTemp {
         bttFacil.setVisible(false);
         bttMedium.setVisible(false);
         bttHard.setVisible(false);
+        TIEMPO_PARTIDA = 100;
         iniciar(cantidadLetras);
     }
 
@@ -88,6 +89,7 @@ public class ControladorTemp {
         bttFacil.setVisible(false);
         bttMedium.setVisible(false);
         bttHard.setVisible(false);
+        TIEMPO_PARTIDA = 180;
         iniciar(cantidadLetras);
     }
     @FXML
@@ -96,6 +98,7 @@ public class ControladorTemp {
         bttFacil.setVisible(false);
         bttMedium.setVisible(false);
         bttHard.setVisible(false);
+        TIEMPO_PARTIDA = 110;
         iniciar(cantidadLetras);
     }
 
